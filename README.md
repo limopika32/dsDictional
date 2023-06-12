@@ -17,7 +17,7 @@ pip install sendgrid pygame nfcpy requests
 
 ## 使用方法
 1. `start.bat` を起動するか `main.py` を実行します。
-2. 利用者がシステムを利用できる状態になります。(詳細は [userManual.pdf](./userManual.pdf) を確認してください)。
+2. 利用者がシステムを利用できる状態になります(詳細は [userManual.pdf](./userManual.pdf) を確認してください)。
 + 毎日 0:00 に貸出延滞者に対してメールが送信されます。
 3. 間違えてウィンドウを閉じて終了しても、再度 1. からやり直すことでシステムを再開することが出来ます。
 
