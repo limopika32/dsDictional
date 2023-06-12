@@ -24,7 +24,7 @@ ev["http_proxy"] = "wwwproxy.kanazawa-it.ac.jp:8080"
 ev["https_proxy"] = "wwwproxy.kanazawa-it.ac.jp:8080"
 
 tx_title="電算研_図書管理"
-tx_ver="v0.991"
+tx_ver="v0.993"
 
 gray="#444444"
 white="#ffffff"
@@ -77,7 +77,7 @@ class mCardReader(object):
                             "ご利用いただけません","\uee57")
                 mplay("snd/forb.mp3")
         except AttributeError:
-            if FLAG[1]:
+            if not(FLAG[1]):
                 mplay("snd/error3.mp3")
                 stat_update(warn,"[E10] KIT学生証ではありません",
                             "カードを離してください","\ue1e0")
@@ -112,8 +112,7 @@ root = tk.Tk()
 #title setting
 root.title((tx_title,tx_ver))
 #window size setting
-#root.attributes("-fullscreen",True)
-root.geometry("1280x720")
+root.attributes("-fullscreen",True)
 #sound setting
 mx.init(frequency= 44100)
 
@@ -236,6 +235,9 @@ def service(event):
     isbnS.delete(0,tk.END); isbnS.focus_set()
     if ISBN[0] == "DATA-ENDJ":
         CNTDN[0]=False
+    elif ISBN[0] == "SHUTDOWNO":
+        CNTDN[0]=False
+        root.quit()
     elif ISBN[0] in EXT[0]:
         if ISBN[0] in PBD[0]:
             try:
@@ -365,6 +367,9 @@ def dictUPD(event):
         ISBN[0] = isbnS.get()
         if ISBN[0] == "DATA-ENDJ":
             CNTDN[0]=False
+        elif ISBN[0][:2]=="19":
+            # 19 で始まる下段コードは無視
+            pass
         elif ISBN[0] in USD[0]: #ログインユーザーに貸出されているか
             btext = EXT[0][ISBN[0]]
             del USD[0][ISBN[0]]
@@ -519,12 +524,12 @@ def daily_update():
                     for row in rdr(f):
                         tmpb = dt.strptime(row[1],"%Y-%m-%d")
                         tmab = dt.date(tmpa) - dt.date(tmpb)
-                        if  tmab.days == 1:
+                        if  tmab.days == 1 or tmab.days % 7 == 0:
                             tmpd += "&raquo; {}まで / {} ({})<br>".format(
                                 tmpb.strftime("%Y年 %m月 %d日"),EXT[0][row[0]],row[0])
                     if tmpd != "" :
                         mailPST(3, i, int(tmpc[1]), EXT[1][i], tmpd)
-                        print("- {} ------\nS: Delay Mail send OK \n".format(i))
+                        print(" - {} ------\n S: Delay Mail send OK \n".format(i))
         except Exception as e:
             print("S.Err: "+str(e))
 
