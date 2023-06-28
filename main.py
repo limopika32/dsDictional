@@ -19,9 +19,9 @@ from collections import deque
 from requests import get as rg
 import xml.etree.ElementTree as et
 
-# proxy
-ev["http_proxy"] = "wwwproxy.kanazawa-it.ac.jp:8080"
-ev["https_proxy"] = "wwwproxy.kanazawa-it.ac.jp:8080"
+# if you need, write proxy address here
+ev["http_proxy"] = ""
+ev["https_proxy"] = ""
 
 tx_title="電算研_図書管理"
 tx_ver="v0.993"
