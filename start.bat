@@ -10,5 +10,5 @@ set se=%time:~6,2%
  
 set logname=%yr%-%mt%-%dy%_%hr%-%mn%-%se%
 
-python main.py
+python main2.py
 pause
