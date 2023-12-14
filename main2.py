@@ -24,7 +24,7 @@ ev["http_proxy"] = ""
 ev["https_proxy"] = ""
 
 tx_title="電算研_図書管理"
-tx_ver="v0.993"
+tx_ver="v1.0"
 
 gray="#444444"
 white="#ffffff"
@@ -342,6 +342,9 @@ def retnONLY(event):
     ISBN[0] = isbnS.get()
     if ISBN[0] == "DATA-ENDJ":
         CNTDN[0]=False
+    elif ISBN[0][:2]=="19":
+        # ingore begin from "19"
+        pass
     elif ISBN[0] in USD[0] or ISBN[0] in USD[1]:
         btext = EXT[0][ISBN[0]]
         del USD[0][ISBN[0]]
@@ -658,9 +661,9 @@ print("Shutdown...")
 print("Please disconnect NFC reader.")
 FLAG[0] = False
 
-thr1.join(); print("S: NFC shutdown OK")
 thr2.join(); print("S: Public shutdown OK")
 thr3.join(); print("S: Mail shutdown OK")
+thr1.join(); print("S: NFC shutdown OK")
 
 mx.quit()
 print()
